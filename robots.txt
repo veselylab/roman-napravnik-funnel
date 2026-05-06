@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://veselylab.github.io/roman-napravnik-funnel/sitemap.xml
+Sitemap: https://webinar.romannapravnik.cz/sitemap.xml
