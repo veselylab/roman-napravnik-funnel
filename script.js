@@ -15,7 +15,6 @@
   (function(){
     var f = document.getElementById('regFrame');
     if(!f) return;
-    // Listen for height message from the form (if PMG sends one)
     window.addEventListener('message', function(e){
       if(!e.data) return;
       var h = 0;
@@ -25,31 +24,11 @@
       }
       if(h > 200) f.style.height = (h + 32) + 'px';
     });
-    // Same-origin fallback (silently fails for cross-origin)
     function trySameOriginResize(){
       try{
         var h = f.contentWindow.document.body.scrollHeight;
         if(h > 200) f.style.height = (h + 32) + 'px';
-      }catch(e){ /* cross-origin – ignore, fixed CSS height is the fallback */ }
+      }catch(e){ /* cross-origin – ignore */ }
     }
     f.addEventListener('load', trySameOriginResize);
-  })();
-
-  // YouTube end-screen suppression — seek back & pause when video ends
-  (function(){
-    var apiTag = document.createElement('script');
-    apiTag.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(apiTag);
-    window.onYouTubeIframeAPIReady = function(){
-      new YT.Player('roman-video', {
-        events: {
-          'onStateChange': function(e){
-            if (e.data === YT.PlayerState.ENDED) {
-              e.target.seekTo(0);
-              e.target.pauseVideo();
-            }
-          }
-        }
-      });
-    };
   })();
