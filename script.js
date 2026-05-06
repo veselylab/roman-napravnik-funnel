@@ -34,3 +34,22 @@
     }
     f.addEventListener('load', trySameOriginResize);
   })();
+
+  // YouTube end-screen suppression — seek back & pause when video ends
+  (function(){
+    var apiTag = document.createElement('script');
+    apiTag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(apiTag);
+    window.onYouTubeIframeAPIReady = function(){
+      new YT.Player('roman-video', {
+        events: {
+          'onStateChange': function(e){
+            if (e.data === YT.PlayerState.ENDED) {
+              e.target.seekTo(0);
+              e.target.pauseVideo();
+            }
+          }
+        }
+      });
+    };
+  })();
